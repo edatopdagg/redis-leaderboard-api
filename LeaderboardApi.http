@@ -1,0 +1,80 @@
+@LeaderboardApi_HostAddress = http://localhost:5020
+
+GET {{LeaderboardApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+### Zaman Bazlı Liderlik Tablosu Testleri
+
+### 1. Zaman Bazlı Skor Ekleme
+POST http://localhost:5020/scores/submit-time-based/game1
+Content-Type: application/json
+
+{
+  "username": "testuser1",
+  "score": 1500
+}
+
+### 2. Günlük Liderlik Tablosu
+GET http://localhost:5020/leaderboard/daily/game1/10
+
+### 3. Haftalık Liderlik Tablosu
+GET http://localhost:5020/leaderboard/weekly/game1/10
+
+### 4. Aylık Liderlik Tablosu
+GET http://localhost:5020/leaderboard/monthly/game1/10
+
+### 5. Günlük Kullanıcı Skoru
+GET http://localhost:5020/leaderboard/daily/user/game1/testuser1
+
+### 6. Haftalık Kullanıcı Skoru
+GET http://localhost:5020/leaderboard/weekly/user/game1/testuser1
+
+### 7. Aylık Kullanıcı Skoru
+GET http://localhost:5020/leaderboard/monthly/user/game1/testuser1
+
+### 8. Zaman Bazlı Skor Artırma
+PUT http://localhost:5020/scores/increment-time-based/game1
+Content-Type: application/json
+
+{
+  "username": "testuser1",
+  "increment": 100
+}
+
+### 9. Test Verileri Ekleme
+POST http://localhost:5020/scores/submit-time-based/game1
+Content-Type: application/json
+
+{
+  "username": "player1",
+  "score": 2000
+}
+
+###
+POST http://localhost:5020/scores/submit-time-based/game1
+Content-Type: application/json
+
+{
+  "username": "player2",
+  "score": 1800
+}
+
+###
+POST http://localhost:5020/scores/submit-time-based/game1
+Content-Type: application/json
+
+{
+  "username": "player3",
+  "score": 2200
+}
+
+### 10. Tüm Zaman Bazlı Tabloları Kontrol Et
+GET http://localhost:5020/leaderboard/daily/game1/10
+
+###
+GET http://localhost:5020/leaderboard/weekly/game1/10
+
+###
+GET http://localhost:5020/leaderboard/monthly/game1/10

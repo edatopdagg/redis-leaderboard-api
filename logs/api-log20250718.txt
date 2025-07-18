@@ -1,0 +1,4 @@
+[2025-07-18 08:30:20 INF] Now listening on: http://localhost:5020
+[2025-07-18 08:30:20 INF] Application started. Press Ctrl+C to shut down.
+[2025-07-18 08:30:20 INF] Hosting environment: Development
+[2025-07-18 08:30:20 INF] Content root path: C:\Users\eda.topdag\Desktop\1
