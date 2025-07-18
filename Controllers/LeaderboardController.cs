@@ -2,7 +2,7 @@
 using LeaderboardApi.Services;
 using StackExchange.Redis;
 using System.Linq;
-// using Microsoft.AspNetCore.Authorization; // kaldırıldı
+
 
 namespace LeaderboardApi.Controllers
 {
@@ -17,7 +17,7 @@ namespace LeaderboardApi.Controllers
             _redisService = redisService;
         }
 
-        // Tüm mevcut tablo adlarını döndüren endpoint
+        
         [HttpGet("tables")]
          public IActionResult GetAllTables()
         {
@@ -26,7 +26,7 @@ namespace LeaderboardApi.Controllers
             return Ok(tableNames);
         }
 
-        // Belirli bir tablodaki en yüksek skorlu N kişiyi getir
+        
         [HttpGet("top/{tableName}/{n}")]
         public IActionResult GetTopPlayers(string tableName, int n)
         {
@@ -47,7 +47,7 @@ namespace LeaderboardApi.Controllers
             return Ok(result);
         }
 
-        // Belirli bir tablodaki kullanıcının sırası ve skoru
+        
         [HttpGet("user/{tableName}/{username}")]
         public IActionResult GetUserRankAndScore(string tableName, string username)
         {
@@ -72,7 +72,7 @@ namespace LeaderboardApi.Controllers
             });
         }
 
-        // Belirli bir tablodaki belirli skor aralığındaki kullanıcıları getir
+       
         [HttpGet("scores/{tableName}")]
         public IActionResult GetScoresInRange(
             string tableName,
@@ -84,7 +84,7 @@ namespace LeaderboardApi.Controllers
 
             var db = _redisService.Db;
 
-            // Varsayılan olarak tüm skorları getir
+            
             double min = minScore ?? double.NegativeInfinity;
             double max = maxScore ?? double.PositiveInfinity;
 
@@ -98,7 +98,7 @@ namespace LeaderboardApi.Controllers
             return Ok(result);
         }
 
-        // Kullanıcı adı ile tüm tablolardaki skorları getir
+        
         [HttpGet("user-scores/{username}")]
         public IActionResult GetUserScoresAcrossTables(string username)
         {
@@ -108,13 +108,13 @@ namespace LeaderboardApi.Controllers
             var db = _redisService.Db;
             var results = new List<object>();
 
-            // Önce LeaderboardTables Set'inden tabloları al
+            
             var tableNames = db.SetMembers("LeaderboardTables").Select(x => x.ToString()).ToList();
 
-            // Eğer LeaderboardTables boşsa, tüm SortedSet key'lerini tara
+           
             if (!tableNames.Any())
             {
-                // Redis'teki tüm key'leri al ve SortedSet olanları filtrele
+                
                 var allKeys = db.Multiplexer.GetServer(db.Multiplexer.GetEndPoints().First()).Keys();
                 tableNames = allKeys.Where(key => db.KeyType(key) == RedisType.SortedSet)
                                    .Select(key => key.ToString())
@@ -145,7 +145,7 @@ namespace LeaderboardApi.Controllers
             return Ok(results);
         }
 
-        // Belirli bir seviyedeki kullanıcıları getir (her 5000 puan bir seviye)
+        
         [HttpGet("level/{tableName}/{level}")]
         public IActionResult GetUsersByLevel(string tableName, int level)
         {
@@ -170,7 +170,7 @@ namespace LeaderboardApi.Controllers
         }
 
 
-        // Zaman bazlı liderlik tablosu - günlük
+        
         [HttpGet("daily/{tableName}/{n}")]
         public IActionResult GetDailyTopPlayers(string tableName, int n)
         {
@@ -195,7 +195,7 @@ namespace LeaderboardApi.Controllers
             return Ok(result);
         }
 
-        // Zaman bazlı liderlik tablosu - haftalık
+        
         [HttpGet("weekly/{tableName}/{n}")]
         public IActionResult GetWeeklyTopPlayers(string tableName, int n)
         {
@@ -220,7 +220,7 @@ namespace LeaderboardApi.Controllers
             return Ok(result);
         }
 
-        // Zaman bazlı liderlik tablosu - aylık
+        
         [HttpGet("monthly/{tableName}/{n}")]
         public IActionResult GetMonthlyTopPlayers(string tableName, int n)
         {
@@ -245,7 +245,7 @@ namespace LeaderboardApi.Controllers
             return Ok(result);
         }
 
-        // Zaman bazlı kullanıcı skoru - günlük
+        
         [HttpGet("daily/user/{tableName}/{username}")]
         public IActionResult GetDailyUserRankAndScore(string tableName, string username)
         {
@@ -274,7 +274,7 @@ namespace LeaderboardApi.Controllers
             });
         }
 
-        // Zaman bazlı kullanıcı skoru - haftalık
+       
         [HttpGet("weekly/user/{tableName}/{username}")]
         public IActionResult GetWeeklyUserRankAndScore(string tableName, string username)
         {
@@ -303,7 +303,7 @@ namespace LeaderboardApi.Controllers
             });
         }
 
-        // Zaman bazlı kullanıcı skoru - aylık
+        
         [HttpGet("monthly/user/{tableName}/{username}")]
         public IActionResult GetMonthlyUserRankAndScore(string tableName, string username)
         {
