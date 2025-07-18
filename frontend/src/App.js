@@ -203,7 +203,7 @@ function ThemedApp() {
   const [timePeriod, setTimePeriod] = useState("all");
   const [level, setLevel] = useState("");
 
-  // Tablo listesini güncelleyen fonksiyon
+ 
   const fetchTables = () => {
     axios.get("http://localhost:5020/leaderboard/tables")
       .then(res => {
@@ -223,7 +223,7 @@ function ThemedApp() {
     fetchTables();
   }, []);
 
-  // Skor eklendiğinde tablo listesini de güncelle
+  
   const handleRefresh = () => {
     setRefresh(r => !r);
     fetchTables();
