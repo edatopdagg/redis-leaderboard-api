@@ -80,7 +80,6 @@ curl -X POST http://localhost:5020/scores/submit/game1 \
 
 ## Katkı ve Lisans
 - Katkı yapmak için PR gönderebilirsiniz.
-- MIT Lisansı ile lisanslanmıştır.
 
 ---
 
