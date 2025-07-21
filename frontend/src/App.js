@@ -203,12 +203,12 @@ function ThemedApp() {
   const [timePeriod, setTimePeriod] = useState("all");
   const [level, setLevel] = useState("");
 
- 
+  
   const fetchTables = () => {
     axios.get("http://localhost:5020/leaderboard/tables")
       .then(res => {
         setTableNames(res.data);
-        // Eğer yeni tablo eklendiyse otomatik seç
+        
         if (selectedTable && !res.data.includes(selectedTable)) {
           setSelectedTable(res.data[0] || "");
         }
@@ -242,7 +242,6 @@ function ThemedApp() {
     }
   };
 
-  return (
     <StyledThemeProvider theme={theme}>
       <GlobalStyle />
       <Outer>
@@ -298,32 +297,38 @@ function ThemedApp() {
               <ScoreDeleteForm onSuccess={handleRefresh} />
             </SmallCard>
           </ThreeBoxRow>
-          <BottomRow>
-            <LargeCard>
-              <h2>📊 Grafik</h2>
-              <LeaderboardTable 
-                tableName={selectedTable} 
-                timePeriod={timePeriod}
-                level={level}
-                key={refresh + selectedTable + timePeriod + level + 'chart'} 
-                onlyChart 
-              />
-            </LargeCard>
-            <LargeCard>
-              <h2>📋 Tablo</h2>
-              <LeaderboardTable 
-                tableName={selectedTable} 
-                timePeriod={timePeriod}
-                level={level}
-                key={refresh + selectedTable + timePeriod + level + 'table'} 
-                onlyTable 
-              />
-            </LargeCard>
-          </BottomRow>
+          
+          {selectedTable ? (
+            <BottomRow>
+              <LargeCard>
+                <h2>📊 Grafik</h2>
+                <LeaderboardTable 
+                  tableName={selectedTable} 
+                  timePeriod={timePeriod}
+                  level={level}
+                  key={refresh + selectedTable + timePeriod + level + 'chart'} 
+                  onlyChart 
+                />
+              </LargeCard>
+              <LargeCard>
+                <h2>📋 Tablo</h2>
+                <LeaderboardTable 
+                  tableName={selectedTable} 
+                  timePeriod={timePeriod}
+                  level={level}
+                  key={refresh + selectedTable + timePeriod + level + 'table'} 
+                  onlyTable 
+                />
+              </LargeCard>
+            </BottomRow>
+          ) : (
+            <div style={{textAlign: 'center', margin: '2rem', fontWeight: 600, fontSize: '1.2rem'}}>
+              Lütfen bir tablo seçin.
+            </div>
+          )}
         </Main>
       </Outer>
     </StyledThemeProvider>
-  );
 }
 
 export default function App() {
