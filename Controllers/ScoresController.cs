@@ -68,10 +68,10 @@ namespace LeaderboardApi.Controllers
 
              var db = _redisService.Db;
 
-    // Asıl tabloyu sil
+    
             db.KeyDelete(tableName);
 
-    // Günlük, haftalık, aylık versiyonları varsa onlar da silinsin
+    
             var today = DateTime.UtcNow.ToString("yyyy-MM-dd");
             var weekStart = DateTime.UtcNow.AddDays(-(int)DateTime.UtcNow.DayOfWeek).ToString("yyyy-MM-dd");
             var monthStart = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1).ToString("yyyy-MM");
@@ -80,7 +80,7 @@ namespace LeaderboardApi.Controllers
             db.KeyDelete($"{tableName}:weekly:{weekStart}");
             db.KeyDelete($"{tableName}:monthly:{monthStart}");
 
-    // Tablo ismini kayıtlı listeden kaldır
+    
             db.SetRemove("LeaderboardTables", tableName);
 
             return Ok("Tablo başarıyla silindi.");
